@@ -25,13 +25,22 @@
     </update>
 
     <select id="findExamQuestionDetails" resultType="map">
-        SELECT q.id AS questionId, q.content, q.option_a, q.option_b,
-               q.option_c, q.option_d, q.answer AS correctAnswer,
-               eq.student_answer AS studentAnswer
+        SELECT
+            eq.id AS detailId,
+            eq.exam_id AS examId,
+            eq.question_id AS questionId,
+            q.content AS content,
+            q.option_a AS optionA,
+            q.option_b AS optionB,
+            q.option_c AS optionC,
+            q.option_d AS optionD,
+            q.answer AS correctAnswer,
+            eq.student_answer AS studentAnswer,
+            CASE WHEN q.answer = eq.student_answer THEN 'correct' ELSE 'wrong' END AS result
         FROM exam_questions eq
         JOIN questions q ON eq.question_id = q.id
         WHERE eq.exam_id = #{examId}
-        ORDER BY q.id
+        ORDER BY eq.id
     </select>
 
     <select id="countCorrectAnswers" resultType="int">

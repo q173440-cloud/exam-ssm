@@ -55,4 +55,17 @@
         </where>
     </select>
 
+    <select id="findByExamId" resultType="Score">
+        SELECT id, student_id, exam_id, score, submit_time
+        FROM scores
+        WHERE exam_id = #{examId}
+    </select>
+
+    <select id="findByExamIdAndStudentId" resultType="Score">
+        SELECT id, student_id, exam_id, score, submit_time
+        FROM scores
+        WHERE exam_id = #{examId}
+          AND student_id = #{studentId}
+    </select>
+
 </mapper>

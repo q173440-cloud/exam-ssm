@@ -206,3 +206,50 @@ body { padding-top: 48px; }
     body { background: #fff; }
     .card { box-shadow: none; border: 1px solid #ddd; }
 }
+
+/* ---------- 成绩详情页 ---------- */
+.btn-small {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #1a7cd6;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+}
+.btn-small:hover { background: #0f66b5; text-decoration: none; }
+
+.btn-secondary {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #6c757d;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-left: 8px;
+}
+.btn-secondary:hover { background: #5a6268; text-decoration: none; }
+
+.score-detail-summary {
+    background: #f8fafc;
+    border: 1px solid #e5eaf0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.right-row { background: #f0fff4; }
+.wrong-row { background: #fff5f5; }
+
+@media print {
+    .no-print,
+    .navbar {
+        display: none !important;
+    }
+    body { background: #fff !important; }
+    .main-content { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+    .card, .print-area { box-shadow: none !important; border: none !important; padding: 0 !important; }
+    table { width: 100%; border-collapse: collapse; }
+    table th, table td { border: 1px solid #333 !important; padding: 8px; }
+}

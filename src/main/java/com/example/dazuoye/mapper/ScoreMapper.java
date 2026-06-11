@@ -15,4 +15,9 @@ public interface ScoreMapper {
     Integer maxScore();
     Integer minScore();
     int countRange(@Param("min") int min, @Param("max") int max);
+
+    Score findByExamId(@Param("examId") Integer examId);
+
+    Score findByExamIdAndStudentId(@Param("examId") Integer examId,
+                                    @Param("studentId") Integer studentId);
 }

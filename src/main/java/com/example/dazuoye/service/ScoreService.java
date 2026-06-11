@@ -9,4 +9,5 @@ public interface ScoreService {
     List<Score> findAllWithStudentInfo();
     Map<String, Object> statistics();
     void saveScore(Integer studentId, Integer examId, Integer score);
+    Map<String, Object> findStudentScoreDetail(Integer examId, Integer studentId);
 }

@@ -1,6 +1,7 @@
 package com.example.dazuoye.service.impl;
 
 import com.example.dazuoye.entity.Score;
+import com.example.dazuoye.mapper.ExamMapper;
 import com.example.dazuoye.mapper.ScoreMapper;
 import com.example.dazuoye.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Autowired
     private ScoreMapper scoreMapper;
+
+    @Autowired
+    private ExamMapper examMapper;
 
     @Override
     public List<Score> findByStudentId(Integer studentId) {
@@ -55,5 +59,32 @@ public class ScoreServiceImpl implements ScoreService {
         s.setScore(score);
         s.setSubmitTime(new Date());
         scoreMapper.insert(s);
+    }
+
+    @Override
+    public Map<String, Object> findStudentScoreDetail(Integer examId, Integer studentId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        if (examId == null || studentId == null) {
+            result.put("success", false);
+            result.put("message", "参数错误");
+            return result;
+        }
+
+        Score score = scoreMapper.findByExamIdAndStudentId(examId, studentId);
+
+        if (score == null) {
+            result.put("success", false);
+            result.put("message", "考试记录不存在或无权查看");
+            return result;
+        }
+
+        List<Map<String, Object>> detailList = examMapper.findExamQuestionDetails(examId);
+
+        result.put("success", true);
+        result.put("score", score);
+        result.put("detailList", detailList);
+
+        return result;
     }
 }

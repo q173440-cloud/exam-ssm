@@ -58,6 +58,7 @@
                 <th>提交时间</th>
                 <th style="width:100px">得分</th>
                 <th style="width:80px">是否通过</th>
+                <th class="no-print" style="width:90px">操作</th>
             </tr>
             <% int i = 1; for (Score s : scoreList) { boolean passed = s.getScore() >= 60; %>
             <tr>
@@ -66,6 +67,9 @@
                 <td><%= s.getSubmitTime() %></td>
                 <td style="text-align:center;font-weight:bold;color:<%= passed?"#27ae60":"#e74c3c" %>;"><%= s.getScore() %> 分</td>
                 <td style="text-align:center;color:<%= passed?"#27ae60":"#e74c3c" %>;"><%= passed ? "✔ 通过" : "✘ 未通过" %></td>
+                <td class="no-print" style="text-align:center;">
+                    <a class="btn-small" href="<%= request.getContextPath() %>/scoreDetail?examId=<%= s.getExamId() %>">查看详情</a>
+                </td>
             </tr>
             <% } %>
         </table>
