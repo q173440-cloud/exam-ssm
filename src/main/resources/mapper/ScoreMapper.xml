@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dazuoye.mapper.ScoreMapper">
+
+    <insert id="insert" parameterType="Score" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO scores(student_id, exam_id, score, submit_time)
+        VALUES(#{studentId}, #{examId}, #{score}, #{submitTime})
+    </insert>
+
+    <select id="findByStudentId" resultType="Score">
+        SELECT id, student_id, exam_id, score, submit_time
+        FROM scores
+        WHERE student_id = #{studentId}
+        ORDER BY submit_time DESC
+    </select>
+
+    <select id="findAllWithStudentInfo" resultType="Score">
+        SELECT s.id, s.student_id, s.exam_id, s.score, s.submit_time,
+               st.real_name, st.class_name
+        FROM scores s
+        JOIN students st ON s.student_id = st.id
+        ORDER BY s.submit_time DESC
+    </select>
+
+    <select id="countAllScores" resultType="int">
+        SELECT COUNT(*) FROM scores
+    </select>
+
+    <select id="countPassedScores" resultType="int">
+        SELECT COUNT(*) FROM scores WHERE score >= 60
+    </select>
+
+    <select id="avgScore" resultType="int">
+        SELECT ROUND(AVG(score)) FROM scores
+    </select>
+
+    <select id="maxScore" resultType="int">
+        SELECT MAX(score) FROM scores
+    </select>
+
+    <select id="minScore" resultType="int">
+        SELECT MIN(score) FROM scores
+    </select>
+
+    <select id="countRange" resultType="int">
+        SELECT COUNT(*) FROM scores
+        <where>
+            <if test="min >= 0 and max > 0">
+                score &gt;= #{min} AND score &lt;= #{max}
+            </if>
+            <if test="min >= 0 and max == -1">
+                score &lt; #{min}
+            </if>
+        </where>
+    </select>
+
+</mapper>

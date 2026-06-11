@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dazuoye.mapper.ExamMapper">
+
+    <insert id="insertExam" parameterType="Exam" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO exams(student_id, start_time, status)
+        VALUES(#{studentId}, NOW(), #{status})
+    </insert>
+
+    <insert id="insertExamQuestion">
+        INSERT INTO exam_questions(exam_id, question_id)
+        VALUES(#{examId}, #{questionId})
+    </insert>
+
+    <update id="updateStudentAnswer">
+        UPDATE exam_questions
+        SET student_answer = #{studentAnswer}
+        WHERE exam_id = #{examId} AND question_id = #{questionId}
+    </update>
+
+    <update id="finishExam">
+        UPDATE exams SET status = 'finished', submit_time = NOW()
+        WHERE id = #{examId}
+    </update>
+
+    <select id="findExamQuestionDetails" resultType="map">
+        SELECT q.id AS questionId, q.content, q.option_a, q.option_b,
+               q.option_c, q.option_d, q.answer AS correctAnswer,
+               eq.student_answer AS studentAnswer
+        FROM exam_questions eq
+        JOIN questions q ON eq.question_id = q.id
+        WHERE eq.exam_id = #{examId}
+        ORDER BY q.id
+    </select>
+
+    <select id="countCorrectAnswers" resultType="int">
+        SELECT COUNT(*)
+        FROM exam_questions eq
+        JOIN questions q ON eq.question_id = q.id
+        WHERE eq.exam_id = #{examId} AND eq.student_answer = q.answer
+    </select>
+
+</mapper>

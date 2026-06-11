@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dazuoye.mapper.QuestionMapper">
+
+    <select id="findAll" resultType="Question">
+        SELECT id, content, option_a, option_b, option_c, option_d, answer
+        FROM questions ORDER BY id
+    </select>
+
+    <select id="findById" resultType="Question">
+        SELECT id, content, option_a, option_b, option_c, option_d, answer
+        FROM questions WHERE id = #{id}
+    </select>
+
+    <select id="findRandom" resultType="Question">
+        SELECT id, content, option_a, option_b, option_c, option_d, answer
+        FROM questions ORDER BY RAND() LIMIT #{count}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM questions
+    </select>
+
+    <insert id="insert" parameterType="Question" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO questions(content, option_a, option_b, option_c, option_d, answer)
+        VALUES(#{content}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{answer})
+    </insert>
+
+    <update id="update" parameterType="Question">
+        UPDATE questions SET content=#{content}, option_a=#{optionA}, option_b=#{optionB},
+        option_c=#{optionC}, option_d=#{optionD}, answer=#{answer}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM questions WHERE id=#{id}
+    </delete>
+
+</mapper>
