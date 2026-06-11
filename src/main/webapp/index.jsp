@@ -18,7 +18,6 @@
 <div class="login-wrap">
     <div class="login-box">
         <h2>网络考试系统</h2>
-        <p class="subtitle">Online Examination System (SSM)</p>
         <div class="login-switch">
             <a href="${pageContext.request.contextPath}/?type=student" class="<%= teacherLogin ? "" : "active" %>">学生登录</a>
             <a href="${pageContext.request.contextPath}/?type=teacher" class="<%= teacherLogin ? "active" : "" %>">教师登录</a>
